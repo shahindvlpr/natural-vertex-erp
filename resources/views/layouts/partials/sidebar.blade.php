@@ -1,4 +1,5 @@
 {{-- resources/views/layouts/partials/sidebar.blade.php --}}
+
 @php
     $currentRoute = request()->route()->getName();
     
