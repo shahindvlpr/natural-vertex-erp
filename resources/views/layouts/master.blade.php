@@ -345,6 +345,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             'use strict';
             
+            console.log('✅ DOM Loaded');
+            
             // ============================================
             // PAGE LOADER
             // ============================================
@@ -376,7 +378,6 @@
                     document.body.style.overflow = '';
                 });
                 
-                // Close sidebar on escape key
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape' && sidebar.classList.contains('show')) {
                         sidebar.classList.remove('show');
@@ -387,36 +388,56 @@
             }
             
             // ============================================
-            // SUB-MENU TOGGLE
+            // SUB-MENU TOGGLE - FIXED
             // ============================================
             const submenuToggles = document.querySelectorAll('.nav-link.has-submenu');
+            console.log('✅ Found ' + submenuToggles.length + ' submenu toggles');
             
             submenuToggles.forEach(function(toggle) {
                 toggle.addEventListener('click', function(e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     
-                    const subMenu = this.nextElementSibling;
+                    console.log('✅ Toggle clicked:', this);
+                    
+                    // Get the target ID from data-target attribute
+                    const targetId = this.getAttribute('data-target');
+                    console.log('✅ targetId:', targetId);
+                    
+                    // Find the submenu by ID
+                    const subMenu = document.getElementById(targetId);
+                    console.log('✅ subMenu found:', subMenu ? 'Yes' : 'No');
+                    
+                    // Find the arrow
                     const arrow = this.querySelector('.arrow');
                     
-                    if (subMenu && subMenu.classList.contains('sub-menu')) {
-                        // Close other sub-menus
-                        const parentItem = this.closest('.nav-item');
-                        const siblings = parentItem.parentElement.querySelectorAll('.nav-item');
-                        
-                        siblings.forEach(function(item) {
-                            if (item !== parentItem) {
-                                const otherSub = item.querySelector('.sub-menu');
-                                const otherArrow = item.querySelector('.arrow');
-                                if (otherSub) otherSub.classList.remove('open');
-                                if (otherArrow) otherArrow.classList.remove('open');
+                    if (subMenu) {
+                        // Close all other submenus
+                        const allSubMenus = document.querySelectorAll('.sub-menu');
+                        allSubMenus.forEach(function(menu) {
+                            if (menu.id !== targetId) {
+                                menu.classList.remove('open');
+                                // Also remove open class from parent arrow
+                                const parentToggle = document.querySelector('[data-target="' + menu.id + '"]');
+                                if (parentToggle) {
+                                    const parentArrow = parentToggle.querySelector('.arrow');
+                                    if (parentArrow) {
+                                        parentArrow.classList.remove('open');
+                                    }
+                                }
                             }
                         });
                         
-                        // Toggle current
+                        // Toggle current submenu
                         subMenu.classList.toggle('open');
+                        console.log('✅ Sub-menu toggled, open:', subMenu.classList.contains('open'));
+                        
+                        // Toggle arrow
                         if (arrow) {
                             arrow.classList.toggle('open');
                         }
+                    } else {
+                        console.log('❌ Sub-menu not found for id:', targetId);
                     }
                 });
             });

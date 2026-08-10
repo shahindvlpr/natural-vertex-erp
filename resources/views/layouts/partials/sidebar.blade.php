@@ -10,15 +10,15 @@
             'active' => $currentRoute == 'dashboard.index'
         ],
         [
-    'label' => 'Company Settings',
-    'icon' => 'fa-building',
-    'submenu' => [
-        ['label' => 'Company Info', 'icon' => 'fa-info-circle', 'route' => 'company.settings'],
-        ['label' => 'Logo & Signature', 'icon' => 'fa-image', 'route' => 'company.settings'],
-        ['label' => 'System Settings', 'icon' => 'fa-cog', 'route' => 'company.settings'],
-    ],
-    'active' => $currentRoute == 'company.settings'
-],
+            'label' => 'Company Settings',
+            'icon' => 'fa-building',
+            'submenu' => [
+                ['label' => 'Company Info', 'icon' => 'fa-info-circle', 'route' => 'company.settings'],
+                ['label' => 'Logo & Signature', 'icon' => 'fa-image', 'route' => 'company.settings'],
+                ['label' => 'System Settings', 'icon' => 'fa-cog', 'route' => 'company.settings'],
+            ],
+            'active' => $currentRoute == 'company.settings'
+        ],
         [
             'label' => 'User & Permission',
             'icon' => 'fa-users-cog',
@@ -234,7 +234,7 @@
 
             <div class="nav-item" data-label="{{ strtolower($item['label']) }}">
                 @if($hasSubmenu)
-                    <a href="#" class="nav-link has-submenu {{ $isSubmenuActive ? 'active' : '' }}" 
+                    <a href="javascript:void(0)" class="nav-link has-submenu {{ $isSubmenuActive || $isActive ? 'active' : '' }}" 
                        data-target="sub-{{ Str::slug($item['label']) }}">
                         <span class="nav-icon"><i class="fas {{ $item['icon'] }}"></i></span>
                         <span class="nav-label">{{ $item['label'] }}</span>
@@ -251,8 +251,7 @@
                                 $isSubActive = isset($sub['route']) && $sub['route'] !== '#' && $currentRoute === $sub['route'];
                             @endphp
                             <a href="{{ isset($sub['route']) && $sub['route'] !== '#' ? route($sub['route']) : '#' }}" 
-                               class="nav-link sub-link {{ $isSubActive ? 'active' : '' }}"
-                               onclick="{{ $sub['route'] === '#' ? 'event.preventDefault();' : '' }}">
+                               class="nav-link sub-link {{ $isSubActive ? 'active' : '' }}">
                                 <span class="nav-icon"><i class="fas {{ $sub['icon'] }}"></i></span>
                                 <span class="nav-label">{{ $sub['label'] }}</span>
                             </a>
@@ -260,8 +259,7 @@
                     </div>
                 @else
                     <a href="{{ isset($item['route']) && $item['route'] !== '#' ? route($item['route']) : '#' }}" 
-                       class="nav-link {{ $isActive ? 'active' : '' }}"
-                       onclick="{{ isset($item['route']) && $item['route'] === '#' ? 'event.preventDefault();' : '' }}">
+                       class="nav-link {{ $isActive ? 'active' : '' }}">
                         <span class="nav-icon"><i class="fas {{ $item['icon'] }}"></i></span>
                         <span class="nav-label">{{ $item['label'] }}</span>
                         @if(isset($item['badge']))
@@ -299,7 +297,7 @@
 
 <style>
 /* ============================================
-   SIDEBAR - COLLAPSE SUPPORT
+   SIDEBAR - COMPLETE STYLES
 ============================================ */
 :root {
     --sidebar-width: 270px;
@@ -336,9 +334,6 @@
     border-right: 1px solid var(--border-color);
 }
 
-/* ============================================
-   COLLAPSED STATE
-============================================ */
 .sidebar.collapsed {
     width: var(--sidebar-collapsed);
 }
@@ -428,9 +423,6 @@
     height: 10px;
 }
 
-/* ============================================
-   SIDEBAR BRAND
-============================================ */
 .sidebar-brand {
     padding: 20px 24px 16px;
     display: flex;
@@ -484,9 +476,6 @@
     font-weight: 500;
 }
 
-/* ============================================
-   SIDEBAR SEARCH
-============================================ */
 .sidebar-search {
     padding: 14px 20px 12px;
     flex-shrink: 0;
@@ -551,9 +540,6 @@
     color: var(--text-white);
 }
 
-/* ============================================
-   SIDEBAR NAVIGATION
-============================================ */
 .sidebar-nav {
     flex: 1;
     overflow-y: auto;
@@ -779,9 +765,6 @@
     }
 }
 
-/* ============================================
-   RESPONSIVE - Mobile
-============================================ */
 @media (max-width: 992px) {
     .sidebar {
         transform: translateX(-100%);
@@ -792,7 +775,6 @@
         transform: translateX(0);
     }
 
-    /* Mobile এ Collapse ডিজেবল */
     .sidebar.collapsed {
         width: var(--sidebar-width);
     }
@@ -910,107 +892,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // ============================================
-    // TOGGLE SUB-MENU
-    // ============================================
-    const submenuToggles = document.querySelectorAll('.nav-link.has-submenu');
+    console.log('✅ Sidebar JS loaded');
     
-    submenuToggles.forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.dataset.target;
-            const subMenu = document.getElementById(targetId);
-            const arrow = this.querySelector('.arrow');
-            
-            if (subMenu) {
-                const allSubMenus = document.querySelectorAll('.sub-menu');
-                allSubMenus.forEach(menu => {
-                    if (menu.id !== targetId) {
-                        menu.classList.remove('open');
-                        const parentToggle = document.querySelector(`[data-target="${menu.id}"]`);
-                        if (parentToggle) {
-                            const parentArrow = parentToggle.querySelector('.arrow');
-                            if (parentArrow) parentArrow.classList.remove('open');
-                        }
-                    }
-                });
-                
-                subMenu.classList.toggle('open');
-                if (arrow) {
-                    arrow.classList.toggle('open');
-                }
-            }
-        });
-    });
-
-    // ============================================
-    // SIDEBAR SEARCH
-    // ============================================
-    const searchInput = document.getElementById('sidebarSearch');
-    const searchClear = document.getElementById('searchClear');
-    const navItems = document.querySelectorAll('.nav-item');
-
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase().trim();
-            
-            if (searchTerm.length > 0) {
-                searchClear.style.display = 'block';
-            } else {
-                searchClear.style.display = 'none';
-            }
-
-            navItems.forEach(item => {
-                const label = item.dataset.label || '';
-                const subLinks = item.querySelectorAll('.sub-link');
-                let found = false;
-
-                if (label.includes(searchTerm)) {
-                    found = true;
-                }
-
-                subLinks.forEach(link => {
-                    const subLabel = link.querySelector('.nav-label')?.textContent?.toLowerCase() || '';
-                    if (subLabel.includes(searchTerm)) {
-                        found = true;
-                        const parentSub = link.closest('.sub-menu');
-                        if (parentSub) {
-                            parentSub.classList.add('open');
-                            const parentToggle = document.querySelector(`[data-target="${parentSub.id}"]`);
-                            if (parentToggle) {
-                                const arrow = parentToggle.querySelector('.arrow');
-                                if (arrow) arrow.classList.add('open');
-                            }
-                        }
-                    }
-                });
-
-                if (found) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-        });
-
-        searchClear.addEventListener('click', function() {
-            searchInput.value = '';
-            searchInput.dispatchEvent(new Event('input'));
-            searchInput.focus();
-        });
-
-        // Keyboard shortcut - Ctrl + /
-        document.addEventListener('keydown', function(e) {
-            if ((e.ctrlKey || e.metaKey) && e.key === '/') {
-                e.preventDefault();
-                searchInput.focus();
-            }
-            
-            if (e.key === 'Escape' && document.activeElement === searchInput) {
-                searchInput.blur();
-            }
-        });
-    }
 });
 </script>
