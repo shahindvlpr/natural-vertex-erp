@@ -27,7 +27,11 @@ class CompanyController extends Controller
             ]);
         }
 
-        return view('company.index', compact('company'));
+        // Get currencies and timezones
+        $currencies = $this->getCurrencies();
+        $timezones = $this->getTimezones();
+
+        return view('company.index', compact('company', 'currencies', 'timezones'));
     }
 
     /**
@@ -66,13 +70,17 @@ class CompanyController extends Controller
 
         $company = Company::first();
         
+        if (!$company) {
+            return response()->json(['error' => 'Company not found'], 404);
+        }
+
         if ($company->logo) {
             Storage::disk('public')->delete('uploads/companies/' . $company->logo);
         }
 
         $file = $request->file('logo');
         $filename = 'logo_' . time() . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('uploads/companies', $filename, 'public');
+        $file->storeAs('uploads/companies', $filename, 'public');
 
         $company->update(['logo' => $filename]);
 
@@ -93,13 +101,17 @@ class CompanyController extends Controller
 
         $company = Company::first();
         
+        if (!$company) {
+            return response()->json(['error' => 'Company not found'], 404);
+        }
+
         if ($company->favicon) {
             Storage::disk('public')->delete('uploads/companies/' . $company->favicon);
         }
 
         $file = $request->file('favicon');
         $filename = 'favicon_' . time() . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('uploads/companies', $filename, 'public');
+        $file->storeAs('uploads/companies', $filename, 'public');
 
         $company->update(['favicon' => $filename]);
 
@@ -120,13 +132,17 @@ class CompanyController extends Controller
 
         $company = Company::first();
         
+        if (!$company) {
+            return response()->json(['error' => 'Company not found'], 404);
+        }
+
         if ($company->signature) {
             Storage::disk('public')->delete('uploads/companies/' . $company->signature);
         }
 
         $file = $request->file('signature');
         $filename = 'signature_' . time() . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('uploads/companies', $filename, 'public');
+        $file->storeAs('uploads/companies', $filename, 'public');
 
         $company->update(['signature' => $filename]);
 
@@ -143,6 +159,10 @@ class CompanyController extends Controller
     {
         $company = Company::first();
         
+        if (!$company) {
+            return response()->json(['error' => 'Company not found'], 404);
+        }
+
         if ($company->logo) {
             Storage::disk('public')->delete('uploads/companies/' . $company->logo);
             $company->update(['logo' => null]);
@@ -152,5 +172,43 @@ class CompanyController extends Controller
             'success' => true,
             'message' => 'Logo deleted successfully!'
         ]);
+    }
+
+    /**
+     * Get all currencies.
+     */
+    private function getCurrencies()
+    {
+        return [
+            'BDT' => 'Bangladeshi Taka (৳)',
+            'USD' => 'US Dollar ($)',
+            'EUR' => 'Euro (€)',
+            'GBP' => 'British Pound (£)',
+            'INR' => 'Indian Rupee (₹)',
+            'AUD' => 'Australian Dollar (A$)',
+            'CAD' => 'Canadian Dollar (C$)',
+            'SGD' => 'Singapore Dollar (S$)',
+            'JPY' => 'Japanese Yen (¥)',
+            'CNY' => 'Chinese Yuan (¥)',
+        ];
+    }
+
+    /**
+     * Get all timezones.
+     */
+    private function getTimezones()
+    {
+        return [
+            'Asia/Dhaka' => 'Asia/Dhaka (GMT+6)',
+            'Asia/Kolkata' => 'Asia/Kolkata (GMT+5:30)',
+            'Asia/Dubai' => 'Asia/Dubai (GMT+4)',
+            'Asia/Singapore' => 'Asia/Singapore (GMT+8)',
+            'Asia/Tokyo' => 'Asia/Tokyo (GMT+9)',
+            'Europe/London' => 'Europe/London (GMT+0)',
+            'Europe/Paris' => 'Europe/Paris (GMT+1)',
+            'America/New_York' => 'America/New_York (GMT-5)',
+            'America/Los_Angeles' => 'America/Los_Angeles (GMT-8)',
+            'Australia/Sydney' => 'Australia/Sydney (GMT+11)',
+        ];
     }
 }

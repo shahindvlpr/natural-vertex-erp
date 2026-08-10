@@ -10,14 +10,15 @@
             'active' => $currentRoute == 'dashboard.index'
         ],
         [
-            'label' => 'Company Settings',
-            'icon' => 'fa-building',
-            'submenu' => [
-                ['label' => 'Company Info', 'icon' => 'fa-info-circle', 'route' => 'company.settings'],
-                ['label' => 'Logo & Signature', 'icon' => 'fa-image', 'route' => 'company.settings'],
-                ['label' => 'System Settings', 'icon' => 'fa-cog', 'route' => 'company.settings'],
-            ]
-        ],
+    'label' => 'Company Settings',
+    'icon' => 'fa-building',
+    'submenu' => [
+        ['label' => 'Company Info', 'icon' => 'fa-info-circle', 'route' => 'company.settings'],
+        ['label' => 'Logo & Signature', 'icon' => 'fa-image', 'route' => 'company.settings'],
+        ['label' => 'System Settings', 'icon' => 'fa-cog', 'route' => 'company.settings'],
+    ],
+    'active' => $currentRoute == 'company.settings'
+],
         [
             'label' => 'User & Permission',
             'icon' => 'fa-users-cog',
