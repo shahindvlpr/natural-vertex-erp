@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -33,5 +34,15 @@ class Role extends Model
     public function hasPermission($permissionSlug)
     {
         return $this->permissions()->where('slug', $permissionSlug)->exists();
+    }
+
+    public function getPermissionCountAttribute()
+    {
+        return $this->permissions()->count();
+    }
+
+    public function getUserCountAttribute()
+    {
+        return $this->users()->count();
     }
 }

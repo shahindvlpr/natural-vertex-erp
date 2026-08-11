@@ -1,0 +1,66 @@
+@extends('layouts.master')
+
+@section('title', 'Create Permission - Natural Vertex ERP')
+@section('page-title', 'Create Permission')
+
+@section('content')
+<div style="background:#fff; border:1px solid #e8eaed; max-width:600px; margin:0 auto;">
+    <div style="padding:16px 20px; border-bottom:1px solid #e8eaed;">
+        <h5 style="margin:0; font-size:16px; font-weight:600;">
+            <i class="fas fa-key" style="color:#6c5ce7;"></i> Create New Permission
+        </h5>
+    </div>
+
+    <div style="padding:20px;">
+        @if($errors->any())
+            <div style="background:#fef2f2; border:1px solid #fecaca; padding:10px 16px; color:#991b1b; margin-bottom:16px;">
+                @foreach($errors->all() as $error)
+                    <div><i class="fas fa-exclamation-circle"></i> {{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
+
+        <form action="{{ route('permissions.store') }}" method="POST">
+            @csrf
+
+            <div style="margin-bottom:16px;">
+                <label style="font-size:12px; font-weight:600; color:#4a4a5a; display:block; margin-bottom:4px;">
+                    Permission Name <span style="color:#ef4444;">*</span>
+                </label>
+                <input type="text" name="name" value="{{ old('name') }}" required
+                       style="width:100%; padding:9px 14px; font-size:13px; border:1px solid #e8eaed; background:#fff; color:#1a1a2e;">
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label style="font-size:12px; font-weight:600; color:#4a4a5a; display:block; margin-bottom:4px;">
+                    Module <span style="color:#ef4444;">*</span>
+                </label>
+                <select name="module" required style="width:100%; padding:9px 14px; font-size:13px; border:1px solid #e8eaed; background:#fff; color:#1a1a2e;">
+                    <option value="">Select Module</option>
+                    @foreach($modules as $key => $value)
+                        <option value="{{ $key }}" {{ old('module') == $key ? 'selected' : '' }}>
+                            {{ $value }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label style="font-size:12px; font-weight:600; color:#4a4a5a; display:block; margin-bottom:4px;">
+                    Description
+                </label>
+                <textarea name="description" rows="2" style="width:100%; padding:9px 14px; font-size:13px; border:1px solid #e8eaed; background:#fff; color:#1a1a2e;">{{ old('description') }}</textarea>
+            </div>
+
+            <div style="display:flex; gap:12px; padding-top:16px; border-top:1px solid #e8eaed;">
+                <button type="submit" style="padding:10px 28px; background:linear-gradient(135deg,#6c5ce7,#4a3db8); color:#fff; border:none; font-size:14px; font-weight:600; cursor:pointer;">
+                    <i class="fas fa-save"></i> Create Permission
+                </button>
+                <a href="{{ route('permissions.index') }}" style="padding:10px 20px; color:#6b6b80; text-decoration:none; font-size:14px; border:1px solid #e8eaed; background:#fff;">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection

@@ -688,20 +688,6 @@
     </style>
 </head>
 <body>
-    <!-- ============================================
-         PARTICLES
-    ============================================ -->
-    <div class="particles" id="particles"></div>
-
-    <!-- ============================================
-         LOGIN WRAPPER
-    ============================================ -->
-    <div class="logo-wrapper">
-    @php
-        $company = \App\Models\Company::first();
-        $logo = $company && $company->logo ? asset('storage/uploads/companies/' . $company->logo) : asset('images/default-logo.png');
-    @endphp
-    <img src="{{ $logo }}" alt="Logo" style="width:64px; height:64px; object-fit:contain;">
 </div>
     <div class="login-wrapper">
         <div class="login-card">

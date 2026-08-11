@@ -1,5 +1,4 @@
 {{-- resources/views/layouts/partials/sidebar.blade.php --}}
-
 @php
     $currentRoute = request()->route()->getName();
     
@@ -24,11 +23,12 @@
             'label' => 'User & Permission',
             'icon' => 'fa-users-cog',
             'submenu' => [
-                ['label' => 'Users', 'icon' => 'fa-users', 'route' => '#'],
-                ['label' => 'Roles', 'icon' => 'fa-user-tag', 'route' => '#'],
-                ['label' => 'Permissions', 'icon' => 'fa-key', 'route' => '#'],
-                ['label' => 'Audit Log', 'icon' => 'fa-history', 'route' => '#'],
-            ]
+                ['label' => 'Users', 'icon' => 'fa-users', 'route' => 'users.index'],
+                ['label' => 'Roles', 'icon' => 'fa-user-tag', 'route' => 'roles.index'],
+                ['label' => 'Permissions', 'icon' => 'fa-key', 'route' => 'permissions.index'],
+                ['label' => 'Audit Log', 'icon' => 'fa-history', 'route' => 'audit.index'],
+            ],
+            'active' => in_array($currentRoute, ['users.index', 'users.create', 'users.edit', 'roles.index', 'roles.create', 'roles.edit', 'permissions.index', 'permissions.create', 'permissions.edit', 'audit.index'])
         ],
         [
             'label' => 'HR',
@@ -202,10 +202,14 @@
     <!-- Brand -->
     <div class="sidebar-brand">
         <div class="logo-icon">
-            <i class="fas fa-cubes"></i>
+            @php
+                $company = \App\Models\Company::first();
+                $logo = $company && $company->logo ? asset('storage/uploads/companies/' . $company->logo) : asset('images/default-logo.png');
+            @endphp
+            <img src="{{ $logo }}" alt="Logo" style="width:40px; height:40px; object-fit:contain;">
         </div>
         <div class="brand-info">
-            <div class="brand-text">Natural Vertex</div>
+            <div class="brand-text">{{ $company->name ?? 'Natural Vertex' }}</div>
             <div class="brand-sub">ERP System</div>
         </div>
     </div>
@@ -252,7 +256,8 @@
                                 $isSubActive = isset($sub['route']) && $sub['route'] !== '#' && $currentRoute === $sub['route'];
                             @endphp
                             <a href="{{ isset($sub['route']) && $sub['route'] !== '#' ? route($sub['route']) : '#' }}" 
-                               class="nav-link sub-link {{ $isSubActive ? 'active' : '' }}">
+                               class="nav-link sub-link {{ $isSubActive ? 'active' : '' }}"
+                               onclick="{{ $sub['route'] === '#' ? 'event.preventDefault();' : '' }}">
                                 <span class="nav-icon"><i class="fas {{ $sub['icon'] }}"></i></span>
                                 <span class="nav-label">{{ $sub['label'] }}</span>
                             </a>
@@ -260,7 +265,8 @@
                     </div>
                 @else
                     <a href="{{ isset($item['route']) && $item['route'] !== '#' ? route($item['route']) : '#' }}" 
-                       class="nav-link {{ $isActive ? 'active' : '' }}">
+                       class="nav-link {{ $isActive ? 'active' : '' }}"
+                       onclick="{{ isset($item['route']) && $item['route'] === '#' ? 'event.preventDefault();' : '' }}">
                         <span class="nav-icon"><i class="fas {{ $item['icon'] }}"></i></span>
                         <span class="nav-label">{{ $item['label'] }}</span>
                         @if(isset($item['badge']))
@@ -439,20 +445,16 @@
 .logo-icon {
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    color: #fff;
-    box-shadow: 0 4px 20px var(--shadow-color);
-    transition: var(--transition);
     flex-shrink: 0;
 }
 
-.logo-icon:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 28px rgba(108, 92, 231, 0.25);
+.logo-icon img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
 .brand-info {
@@ -771,15 +773,12 @@
         transform: translateX(-100%);
         width: var(--sidebar-width);
     }
-
     .sidebar.show {
         transform: translateX(0);
     }
-
     .sidebar.collapsed {
         width: var(--sidebar-width);
     }
-
     .sidebar.collapsed .brand-info,
     .sidebar.collapsed .brand-sub,
     .sidebar.collapsed .nav-label,
@@ -792,57 +791,45 @@
     .sidebar.collapsed .version-info span {
         display: flex !important;
     }
-
     .sidebar.collapsed .sidebar-brand {
         justify-content: flex-start;
         padding: 20px 24px 16px;
     }
-
     .sidebar.collapsed .sidebar-search {
         padding: 14px 20px 12px;
     }
-
     .sidebar.collapsed .sidebar-search .search-wrapper {
         justify-content: flex-start;
     }
-
     .sidebar.collapsed .sidebar-search i {
         position: absolute;
         left: 14px;
     }
-
     .sidebar.collapsed .sidebar-search input {
         display: block !important;
     }
-
     .sidebar.collapsed .search-clear {
         display: block !important;
     }
-
     .sidebar.collapsed .nav-link {
         justify-content: flex-start;
         padding: 10px 14px;
         border-left: 3px solid transparent;
     }
-
     .sidebar.collapsed .nav-link .nav-icon {
         margin: 0;
         font-size: 15px;
     }
-
     .sidebar.collapsed .sub-menu {
         display: block !important;
     }
-
     .sidebar.collapsed .sidebar-footer {
         flex-direction: row;
         padding: 12px 24px;
     }
-
     .sidebar.collapsed .sidebar-footer .version-info {
         flex-direction: row;
     }
-
     .sidebar.collapsed .sidebar-footer .status-dot {
         flex-direction: row;
     }
@@ -853,38 +840,34 @@
         width: 100%;
         max-width: 300px;
     }
-
     .sidebar-brand {
         padding: 16px 18px;
         min-height: 64px;
     }
-
     .logo-icon {
         width: 34px;
         height: 34px;
-        font-size: 16px;
     }
-
+    .logo-icon img {
+        width: 34px;
+        height: 34px;
+    }
     .brand-text {
         font-size: 15px;
     }
-
     .sidebar-search {
         padding: 10px 16px;
     }
-
     .nav-link {
         padding: 8px 12px;
         font-size: 13px;
         min-height: 38px;
     }
-
     .sub-menu .nav-link {
         padding: 6px 12px 6px 28px;
         font-size: 12px;
         min-height: 34px;
     }
-
     .sidebar-footer {
         padding: 10px 16px;
     }

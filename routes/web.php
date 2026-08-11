@@ -5,6 +5,10 @@ use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\AuditLogController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -89,6 +93,51 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/favicon', [CompanyController::class, 'uploadFavicon'])->name('favicon.upload');
         Route::post('/signature', [CompanyController::class, 'uploadSignature'])->name('signature.upload');
         Route::delete('/logo', [CompanyController::class, 'deleteLogo'])->name('logo.delete');
+        Route::delete('/favicon', [CompanyController::class, 'deleteFavicon'])->name('favicon.delete');
+        Route::delete('/signature', [CompanyController::class, 'deleteSignature'])->name('signature.delete');
+    });
+
+    // ============================================
+    // USER & PERMISSION MODULE
+    // ============================================
+
+    // Users
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::put('/{user}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+        Route::get('/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('toggle-status');
+    });
+
+    // Roles
+    Route::prefix('roles')->name('roles.')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('index');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
+        Route::post('/store', [RoleController::class, 'store'])->name('store');
+        Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('edit');
+        Route::put('/{role}', [RoleController::class, 'update'])->name('update');
+        Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroy');
+        Route::get('/{role}/toggle-status', [RoleController::class, 'toggleStatus'])->name('toggle-status');
+    });
+
+    // Permissions
+    Route::prefix('permissions')->name('permissions.')->group(function () {
+        Route::get('/', [PermissionController::class, 'index'])->name('index');
+        Route::get('/create', [PermissionController::class, 'create'])->name('create');
+        Route::post('/store', [PermissionController::class, 'store'])->name('store');
+        Route::get('/{permission}/edit', [PermissionController::class, 'edit'])->name('edit');
+        Route::put('/{permission}', [PermissionController::class, 'update'])->name('update');
+        Route::delete('/{permission}', [PermissionController::class, 'destroy'])->name('destroy');
+    });
+
+    // Audit Logs
+    Route::prefix('audit')->name('audit.')->group(function () {
+        Route::get('/logs', [AuditLogController::class, 'index'])->name('index');
+        Route::get('/logs/{log}', [AuditLogController::class, 'show'])->name('show');
+        Route::get('/logs/export', [AuditLogController::class, 'export'])->name('export');
     });
 
     // ============================================
@@ -116,16 +165,6 @@ Route::middleware(['auth'])->group(function () {
     // ============================================
     
     /*
-    // User Management Module
-    Route::prefix('users')->name('users.')->group(function () {
-        Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('index');
-        Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('create');
-        Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('store');
-        Route::get('/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit');
-        Route::put('/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('update');
-        Route::delete('/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('destroy');
-    });
-
     // HR Module
     Route::prefix('hr')->name('hr.')->group(function () {
         Route::resource('employees', App\Http\Controllers\EmployeeController::class);
