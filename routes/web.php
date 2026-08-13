@@ -164,16 +164,35 @@ Route::middleware(['auth'])->group(function () {
     // OTHER MODULES (Commented - Will be added later)
     // ============================================
     
-    /*
-    // HR Module
-    Route::prefix('hr')->name('hr.')->group(function () {
-        Route::resource('employees', App\Http\Controllers\EmployeeController::class);
-        Route::resource('departments', App\Http\Controllers\DepartmentController::class);
-        Route::resource('designations', App\Http\Controllers\DesignationController::class);
-        Route::resource('shifts', App\Http\Controllers\ShiftController::class);
-        Route::resource('holidays', App\Http\Controllers\HolidayController::class);
-    });
 
+// ============================================
+// HR MODULE ROUTES
+// ============================================
+
+Route::prefix('hr')->name('hr.')->group(function () {
+    
+    // Departments
+    Route::resource('departments', App\Http\Controllers\DepartmentController::class);
+    Route::get('/departments/{department}/toggle-status', [App\Http\Controllers\DepartmentController::class, 'toggleStatus'])->name('departments.toggle-status');
+    
+    // Designations
+    Route::resource('designations', App\Http\Controllers\DesignationController::class);
+    Route::get('/designations/{designation}/toggle-status', [App\Http\Controllers\DesignationController::class, 'toggleStatus'])->name('designations.toggle-status');
+    
+    // Employees
+    Route::resource('employees', App\Http\Controllers\EmployeeController::class);
+    Route::get('/employees/{employee}/toggle-status', [App\Http\Controllers\EmployeeController::class, 'toggleStatus'])->name('employees.toggle-status');
+    
+    // Shifts
+    Route::resource('shifts', App\Http\Controllers\ShiftController::class);
+    Route::get('/shifts/{shift}/toggle-status', [App\Http\Controllers\ShiftController::class, 'toggleStatus'])->name('shifts.toggle-status');
+    
+    // Holidays
+    Route::resource('holidays', App\Http\Controllers\HolidayController::class);
+    Route::get('/holidays/{holiday}/toggle-status', [App\Http\Controllers\HolidayController::class, 'toggleStatus'])->name('holidays.toggle-status');
+});
+
+/*
     // Attendance Module
     Route::prefix('attendance')->name('attendance.')->group(function () {
         Route::get('/', [App\Http\Controllers\AttendanceController::class, 'index'])->name('index');
