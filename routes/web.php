@@ -192,15 +192,22 @@ Route::prefix('hr')->name('hr.')->group(function () {
     Route::get('/holidays/{holiday}/toggle-status', [App\Http\Controllers\HolidayController::class, 'toggleStatus'])->name('holidays.toggle-status');
 });
 
-/*
-    // Attendance Module
-    Route::prefix('attendance')->name('attendance.')->group(function () {
-        Route::get('/', [App\Http\Controllers\AttendanceController::class, 'index'])->name('index');
-        Route::post('/check-in', [App\Http\Controllers\AttendanceController::class, 'checkIn'])->name('check-in');
-        Route::post('/check-out', [App\Http\Controllers\AttendanceController::class, 'checkOut'])->name('check-out');
-        Route::get('/report', [App\Http\Controllers\AttendanceController::class, 'report'])->name('report');
-    });
 
+// ============================================
+// ATTENDANCE MODULE
+// ============================================
+
+Route::prefix('attendance')->name('attendance.')->group(function () {
+    Route::get('/', [App\Http\Controllers\AttendanceController::class, 'index'])->name('index');
+    Route::get('/daily', [App\Http\Controllers\AttendanceController::class, 'daily'])->name('daily');
+    Route::post('/check-in', [App\Http\Controllers\AttendanceController::class, 'checkIn'])->name('check-in');
+    Route::post('/check-out', [App\Http\Controllers\AttendanceController::class, 'checkOut'])->name('check-out');
+    Route::get('/report', [App\Http\Controllers\AttendanceController::class, 'report'])->name('report');
+    Route::get('/employee/{employeeId}/details', [App\Http\Controllers\AttendanceController::class, 'employeeDetails'])->name('employee.details');
+    Route::post('/update-status', [App\Http\Controllers\AttendanceController::class, 'updateStatus'])->name('update-status');
+});
+
+/*
     // Inventory Module
     Route::prefix('inventory')->name('inventory.')->group(function () {
         Route::resource('categories', App\Http\Controllers\CategoryController::class);

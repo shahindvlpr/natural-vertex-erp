@@ -46,9 +46,10 @@
             'label' => 'Attendance',
             'icon' => 'fa-clipboard-check',
             'submenu' => [
-                ['label' => 'Daily Attendance', 'icon' => 'fa-calendar-check', 'route' => '#'],
-                ['label' => 'Monthly Report', 'icon' => 'fa-file-alt', 'route' => '#'],
-            ]
+                ['label' => 'Daily Attendance', 'icon' => 'fa-calendar-check', 'route' => 'attendance.daily'],
+                ['label' => 'Monthly Report', 'icon' => 'fa-file-alt', 'route' => 'attendance.report'],
+            ],
+            'active' => str_starts_with($currentRoute, 'attendance.')
         ],
         [
             'label' => 'Payroll',
