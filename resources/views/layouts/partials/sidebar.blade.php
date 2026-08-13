@@ -34,12 +34,13 @@
             'label' => 'HR',
             'icon' => 'fa-user-friends',
             'submenu' => [
-                ['label' => 'Employees', 'icon' => 'fa-user-plus', 'route' => '#'],
-                ['label' => 'Departments', 'icon' => 'fa-building', 'route' => '#'],
-                ['label' => 'Designations', 'icon' => 'fa-user-tie', 'route' => '#'],
-                ['label' => 'Shifts', 'icon' => 'fa-clock', 'route' => '#'],
-                ['label' => 'Holidays', 'icon' => 'fa-calendar-day', 'route' => '#'],
-            ]
+                ['label' => 'Employees', 'icon' => 'fa-user-plus', 'route' => 'hr.employees.index'],
+                ['label' => 'Departments', 'icon' => 'fa-building', 'route' => 'hr.departments.index'],
+                ['label' => 'Designations', 'icon' => 'fa-user-tie', 'route' => 'hr.designations.index'],
+                ['label' => 'Shifts', 'icon' => 'fa-clock', 'route' => 'hr.shifts.index'],
+                ['label' => 'Holidays', 'icon' => 'fa-calendar-day', 'route' => 'hr.holidays.index'],
+            ],
+            'active' => str_starts_with($currentRoute, 'hr.')
         ],
         [
             'label' => 'Attendance',
