@@ -207,6 +207,47 @@ Route::prefix('attendance')->name('attendance.')->group(function () {
     Route::post('/update-status', [App\Http\Controllers\AttendanceController::class, 'updateStatus'])->name('update-status');
 });
 
+// ============================================
+// PAYROLL MODULE ROUTES
+// ============================================
+
+Route::prefix('payroll')->name('payroll.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PayrollController::class, 'index'])->name('index');
+    Route::get('/structure', [App\Http\Controllers\PayrollController::class, 'salaryStructure'])->name('structure');
+    Route::post('/structure/create', [App\Http\Controllers\PayrollController::class, 'createStructure'])->name('structure.create');
+    Route::get('/generate', [App\Http\Controllers\PayrollController::class, 'generate'])->name('generate');
+    Route::get('/slip/{id}', [App\Http\Controllers\PayrollController::class, 'salarySlip'])->name('slip');
+    Route::get('/slip/{id}/pdf', [App\Http\Controllers\PayrollController::class, 'downloadPdf'])->name('slip.pdf');
+    Route::get('/history', [App\Http\Controllers\PayrollController::class, 'history'])->name('history');
+    Route::post('/update-status/{id}', [App\Http\Controllers\PayrollController::class, 'updateStatus'])->name('update-status');
+});
+
+
+// ============================================
+// PROCUREMENT MODULE ROUTES
+// ============================================
+
+Route::prefix('procurement')->name('procurement.')->group(function () {
+    Route::get('/', [App\Http\Controllers\ProcurementController::class, 'index'])->name('index');
+    
+    // Purchase Requests
+    Route::get('/requests', [App\Http\Controllers\ProcurementController::class, 'purchaseRequest'])->name('request');
+    Route::post('/requests/store', [App\Http\Controllers\ProcurementController::class, 'storePurchaseRequest'])->name('request.store');
+    
+    // Purchase Orders
+    Route::get('/orders', [App\Http\Controllers\ProcurementController::class, 'purchaseOrder'])->name('order');
+    Route::post('/orders/store', [App\Http\Controllers\ProcurementController::class, 'storePurchaseOrder'])->name('order.store');
+    
+    // Goods Receive
+    Route::get('/goods-receive', [App\Http\Controllers\ProcurementController::class, 'goodsReceive'])->name('goods-receive');
+    Route::post('/goods-receive/store', [App\Http\Controllers\ProcurementController::class, 'storeGoodsReceive'])->name('goods-receive.store');
+    
+    // Purchase Invoices
+    Route::get('/invoices', [App\Http\Controllers\ProcurementController::class, 'purchaseInvoice'])->name('invoice');
+    Route::post('/invoices/store', [App\Http\Controllers\ProcurementController::class, 'storePurchaseInvoice'])->name('invoice.store');
+    Route::post('/invoices/{id}/payment', [App\Http\Controllers\ProcurementController::class, 'updateInvoicePayment'])->name('invoice.payment');
+});
+
 /*
     // Inventory Module
     Route::prefix('inventory')->name('inventory.')->group(function () {

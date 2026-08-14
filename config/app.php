@@ -123,4 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+
+// 'providers' => [
+//     // ...
+//     Illuminate\Filesystem\FilesystemServiceProvider::class,
+//     Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+//     // ...
+// ],
+
+// 'aliases' => [
+//     // ...
+//     'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+// ],
+
 ];

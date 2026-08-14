@@ -55,10 +55,11 @@
             'label' => 'Payroll',
             'icon' => 'fa-wallet',
             'submenu' => [
-                ['label' => 'Salary Structure', 'icon' => 'fa-coins', 'route' => '#'],
-                ['label' => 'Generate Salary', 'icon' => 'fa-file-invoice', 'route' => '#'],
-                ['label' => 'Salary Slip', 'icon' => 'fa-file-pdf', 'route' => '#'],
-            ]
+                ['label' => 'Salary Structure', 'icon' => 'fa-cog', 'route' => 'payroll.structure'],
+                ['label' => 'Generate Salary', 'icon' => 'fa-plus-circle', 'route' => 'payroll.generate'],
+                ['label' => 'Salary Slip', 'icon' => 'fa-file-invoice', 'route' => 'payroll.history'],
+            ],
+            'active' => str_starts_with($currentRoute, 'payroll.')
         ],
         [
             'label' => 'Procurement',
