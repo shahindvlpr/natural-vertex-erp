@@ -65,11 +65,12 @@
             'label' => 'Procurement',
             'icon' => 'fa-shopping-cart',
             'submenu' => [
-                ['label' => 'Purchase Request', 'icon' => 'fa-file', 'route' => '#'],
-                ['label' => 'Purchase Order', 'icon' => 'fa-file-signature', 'route' => '#'],
-                ['label' => 'Goods Receive', 'icon' => 'fa-truck', 'route' => '#'],
-                ['label' => 'Purchase Invoice', 'icon' => 'fa-file-invoice', 'route' => '#'],
-            ]
+                ['label' => 'Purchase Request', 'icon' => 'fa-file', 'route' => 'procurement.request'],
+                ['label' => 'Purchase Order', 'icon' => 'fa-file-signature', 'route' => 'procurement.order'],
+                ['label' => 'Goods Receive', 'icon' => 'fa-truck', 'route' => 'procurement.goods-receive'],
+                ['label' => 'Purchase Invoice', 'icon' => 'fa-file-invoice', 'route' => 'procurement.invoice'],
+            ],
+            'active' => str_starts_with($currentRoute, 'procurement.')
         ],
         [
             'label' => 'Supplier',

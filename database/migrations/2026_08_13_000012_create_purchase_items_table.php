@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('purchase_request_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('purchase_order_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('product_id')->constrained()->onDelete('cascade'); // Comment this line
+            $table->unsignedBigInteger('product_id')->nullable(); // Add this instead
             $table->decimal('quantity', 10, 2);
             $table->decimal('received_quantity', 10, 2)->default(0);
             $table->decimal('unit_price', 15, 2)->default(0);
@@ -20,6 +21,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            
+            // Add index instead of foreign key
+            $table->index('product_id');
         });
     }
 

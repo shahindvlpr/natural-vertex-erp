@@ -8,12 +8,15 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code')->unique();
-            $table->text('description')->nullable();
-            $table->foreignId('manager_id')->nullable()->constrained('employees')->onDelete('set null');
+            $table->string('email')->nullable()->unique();
+            $table->string('phone');
+            $table->string('website')->nullable();
+            $table->text('address')->nullable();
+            $table->string('contact_person')->nullable();
+            $table->string('contact_phone')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
@@ -22,6 +25,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('suppliers');
     }
 };
