@@ -248,6 +248,25 @@ Route::prefix('procurement')->name('procurement.')->group(function () {
     Route::post('/invoices/{id}/payment', [App\Http\Controllers\ProcurementController::class, 'updateInvoicePayment'])->name('invoice.payment');
 });
 
+// ============================================
+// SUPPLIER MODULE ROUTES
+// ============================================
+
+Route::prefix('supplier')->name('supplier.')->group(function () {
+    Route::get('/purchase-history/{supplier?}', [App\Http\Controllers\SupplierController::class, 'purchaseHistory'])->name('purchase-history');
+    Route::get('/statement/{supplier?}', [App\Http\Controllers\SupplierController::class, 'statement'])->name('statement');
+    
+    Route::get('/', [App\Http\Controllers\SupplierController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\SupplierController::class, 'create'])->name('create');
+    Route::post('/store', [App\Http\Controllers\SupplierController::class, 'store'])->name('store');
+    Route::get('/{supplier}', [App\Http\Controllers\SupplierController::class, 'show'])->name('show');
+    Route::get('/{supplier}/edit', [App\Http\Controllers\SupplierController::class, 'edit'])->name('edit');
+    Route::put('/{supplier}', [App\Http\Controllers\SupplierController::class, 'update'])->name('update');
+    Route::delete('/{supplier}', [App\Http\Controllers\SupplierController::class, 'destroy'])->name('destroy');
+    Route::get('/{supplier}/toggle-status', [App\Http\Controllers\SupplierController::class, 'toggleStatus'])->name('toggle-status');
+    Route::post('/{supplier}/payment', [App\Http\Controllers\SupplierController::class, 'makePayment'])->name('payment');
+});
+
 /*
     // Inventory Module
     Route::prefix('inventory')->name('inventory.')->group(function () {

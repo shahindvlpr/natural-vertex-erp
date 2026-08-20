@@ -76,128 +76,142 @@
             'label' => 'Supplier',
             'icon' => 'fa-truck',
             'submenu' => [
-                ['label' => 'Supplier List', 'icon' => 'fa-list', 'route' => '#'],
-                ['label' => 'Purchase History', 'icon' => 'fa-history', 'route' => '#'],
-                ['label' => 'Supplier Statement', 'icon' => 'fa-file-alt', 'route' => '#'],
-            ]
+                ['label' => 'Supplier List', 'icon' => 'fa-list', 'route' => 'supplier.index'],
+                ['label' => 'Purchase History', 'icon' => 'fa-history', 'route' => 'supplier.purchase-history', 'params' => ['supplier' => 1]],
+                ['label' => 'Supplier Statement', 'icon' => 'fa-file-alt', 'route' => 'supplier.statement', 'params' => ['supplier' => 1]],
+            ],
+            'active' => str_starts_with($currentRoute, 'supplier.')
         ],
         [
             'label' => 'Warehouse',
             'icon' => 'fa-warehouse',
             'submenu' => [
-                ['label' => 'Warehouses', 'icon' => 'fa-store', 'route' => '#'],
-                ['label' => 'Racks & Shelves', 'icon' => 'fa-layer-group', 'route' => '#'],
-                ['label' => 'Stock Transfer', 'icon' => 'fa-exchange-alt', 'route' => '#'],
-                ['label' => 'Receive Stock', 'icon' => 'fa-arrow-down', 'route' => '#'],
-                ['label' => 'Issue Stock', 'icon' => 'fa-arrow-up', 'route' => '#'],
-            ]
+                ['label' => 'Warehouses', 'icon' => 'fa-store', 'route' => 'warehouse.index'],
+                ['label' => 'Racks & Shelves', 'icon' => 'fa-layer-group', 'route' => 'warehouse.racks'],
+                ['label' => 'Stock Transfer', 'icon' => 'fa-exchange-alt', 'route' => 'warehouse.transfer'],
+                ['label' => 'Receive Stock', 'icon' => 'fa-arrow-down', 'route' => 'warehouse.receive'],
+                ['label' => 'Issue Stock', 'icon' => 'fa-arrow-up', 'route' => 'warehouse.issue'],
+            ],
+            'active' => str_starts_with($currentRoute, 'warehouse.')
         ],
         [
             'label' => 'Inventory',
             'icon' => 'fa-boxes',
             'submenu' => [
-                ['label' => 'Categories', 'icon' => 'fa-tags', 'route' => '#'],
-                ['label' => 'Brands', 'icon' => 'fa-tag', 'route' => '#'],
-                ['label' => 'Products', 'icon' => 'fa-box', 'route' => '#'],
-                ['label' => 'Barcode & QR', 'icon' => 'fa-barcode', 'route' => '#'],
-                ['label' => 'Stock Alert', 'icon' => 'fa-chart-line', 'route' => '#'],
-            ]
+                ['label' => 'Categories', 'icon' => 'fa-tags', 'route' => 'inventory.categories'],
+                ['label' => 'Brands', 'icon' => 'fa-tag', 'route' => 'inventory.brands'],
+                ['label' => 'Products', 'icon' => 'fa-box', 'route' => 'inventory.products'],
+                ['label' => 'Barcode & QR', 'icon' => 'fa-barcode', 'route' => 'inventory.barcode'],
+                ['label' => 'Stock Alert', 'icon' => 'fa-chart-line', 'route' => 'inventory.stock-alert'],
+            ],
+            'active' => str_starts_with($currentRoute, 'inventory.')
         ],
         [
             'label' => 'Production',
             'icon' => 'fa-industry',
             'badge' => 'Manufacturing',
             'submenu' => [
-                ['label' => 'Raw Material', 'icon' => 'fa-flask', 'route' => '#'],
-                ['label' => 'BOM / Recipe', 'icon' => 'fa-list-alt', 'route' => '#'],
-                ['label' => 'Production Order', 'icon' => 'fa-calendar-plus', 'route' => '#'],
-                ['label' => 'Machines', 'icon' => 'fa-cogs', 'route' => '#'],
-                ['label' => 'Quality Check', 'icon' => 'fa-check-double', 'route' => '#'],
-            ]
+                ['label' => 'Raw Material', 'icon' => 'fa-flask', 'route' => 'production.raw-material'],
+                ['label' => 'BOM / Recipe', 'icon' => 'fa-list-alt', 'route' => 'production.bom'],
+                ['label' => 'Production Order', 'icon' => 'fa-calendar-plus', 'route' => 'production.order'],
+                ['label' => 'Machines', 'icon' => 'fa-cogs', 'route' => 'production.machines'],
+                ['label' => 'Quality Check', 'icon' => 'fa-check-double', 'route' => 'production.quality'],
+            ],
+            'active' => str_starts_with($currentRoute, 'production.')
         ],
         [
             'label' => 'Sales',
             'icon' => 'fa-shopping-bag',
             'submenu' => [
-                ['label' => 'POS', 'icon' => 'fa-cash-register', 'route' => '#'],
-                ['label' => 'Invoices', 'icon' => 'fa-file-invoice', 'route' => '#'],
-                ['label' => 'Sales Return', 'icon' => 'fa-undo', 'route' => '#'],
-                ['label' => 'Discounts', 'icon' => 'fa-percent', 'route' => '#'],
-            ]
+                ['label' => 'POS', 'icon' => 'fa-cash-register', 'route' => 'sales.pos'],
+                ['label' => 'Invoices', 'icon' => 'fa-file-invoice', 'route' => 'sales.invoices'],
+                ['label' => 'Sales Return', 'icon' => 'fa-undo', 'route' => 'sales.return'],
+                ['label' => 'Discounts', 'icon' => 'fa-percent', 'route' => 'sales.discounts'],
+            ],
+            'active' => str_starts_with($currentRoute, 'sales.')
         ],
         [
             'label' => 'Customer',
             'icon' => 'fa-users',
             'submenu' => [
-                ['label' => 'Customer List', 'icon' => 'fa-list', 'route' => '#'],
-                ['label' => 'Customer Statement', 'icon' => 'fa-file-alt', 'route' => '#'],
-                ['label' => 'Due Collection', 'icon' => 'fa-money-bill', 'route' => '#'],
-            ]
+                ['label' => 'Customer List', 'icon' => 'fa-list', 'route' => 'customer.index'],
+                ['label' => 'Customer Statement', 'icon' => 'fa-file-alt', 'route' => 'customer.statement'],
+                ['label' => 'Due Collection', 'icon' => 'fa-money-bill', 'route' => 'customer.due-collection'],
+            ],
+            'active' => str_starts_with($currentRoute, 'customer.')
         ],
         [
             'label' => 'Delivery',
             'icon' => 'fa-truck',
             'submenu' => [
-                ['label' => 'Pending Delivery', 'icon' => 'fa-clock', 'route' => '#'],
-                ['label' => 'Completed Delivery', 'icon' => 'fa-check-circle', 'route' => '#'],
-                ['label' => 'Proof of Delivery', 'icon' => 'fa-map-marker-alt', 'route' => '#'],
-            ]
+                ['label' => 'Pending Delivery', 'icon' => 'fa-clock', 'route' => 'delivery.pending'],
+                ['label' => 'Completed Delivery', 'icon' => 'fa-check-circle', 'route' => 'delivery.completed'],
+                ['label' => 'Proof of Delivery', 'icon' => 'fa-map-marker-alt', 'route' => 'delivery.proof'],
+            ],
+            'active' => str_starts_with($currentRoute, 'delivery.')
         ],
         [
             'label' => 'Accounts',
             'icon' => 'fa-book',
             'submenu' => [
-                ['label' => 'Chart of Accounts', 'icon' => 'fa-sitemap', 'route' => '#'],
-                ['label' => 'Voucher', 'icon' => 'fa-file-invoice', 'route' => '#'],
-                ['label' => 'Trial Balance', 'icon' => 'fa-balance-scale', 'route' => '#'],
-                ['label' => 'Balance Sheet', 'icon' => 'fa-file-alt', 'route' => '#'],
-            ]
+                ['label' => 'Chart of Accounts', 'icon' => 'fa-sitemap', 'route' => 'accounts.chart'],
+                ['label' => 'Voucher', 'icon' => 'fa-file-invoice', 'route' => 'accounts.voucher'],
+                ['label' => 'Trial Balance', 'icon' => 'fa-balance-scale', 'route' => 'accounts.trial-balance'],
+                ['label' => 'Balance Sheet', 'icon' => 'fa-file-alt', 'route' => 'accounts.balance-sheet'],
+            ],
+            'active' => str_starts_with($currentRoute, 'accounts.')
         ],
         [
             'label' => 'Expense',
             'icon' => 'fa-money-bill-wave',
             'submenu' => [
-                ['label' => 'Expense List', 'icon' => 'fa-file-invoice', 'route' => '#'],
-                ['label' => 'Add Expense', 'icon' => 'fa-plus-circle', 'route' => '#'],
-                ['label' => 'Expense Report', 'icon' => 'fa-chart-pie', 'route' => '#'],
-            ]
+                ['label' => 'Expense List', 'icon' => 'fa-file-invoice', 'route' => 'expense.index'],
+                ['label' => 'Add Expense', 'icon' => 'fa-plus-circle', 'route' => 'expense.create'],
+                ['label' => 'Expense Report', 'icon' => 'fa-chart-pie', 'route' => 'expense.report'],
+            ],
+            'active' => str_starts_with($currentRoute, 'expense.')
         ],
         [
             'label' => 'Banking',
             'icon' => 'fa-university',
             'submenu' => [
-                ['label' => 'Bank Accounts', 'icon' => 'fa-credit-card', 'route' => '#'],
-                ['label' => 'Deposit', 'icon' => 'fa-arrow-down', 'route' => '#'],
-                ['label' => 'Withdraw', 'icon' => 'fa-arrow-up', 'route' => '#'],
-                ['label' => 'Transfer', 'icon' => 'fa-exchange-alt', 'route' => '#'],
-            ]
+                ['label' => 'Bank Accounts', 'icon' => 'fa-credit-card', 'route' => 'banking.accounts'],
+                ['label' => 'Deposit', 'icon' => 'fa-arrow-down', 'route' => 'banking.deposit'],
+                ['label' => 'Withdraw', 'icon' => 'fa-arrow-up', 'route' => 'banking.withdraw'],
+                ['label' => 'Transfer', 'icon' => 'fa-exchange-alt', 'route' => 'banking.transfer'],
+            ],
+            'active' => str_starts_with($currentRoute, 'banking.')
         ],
         [
             'label' => 'Reports',
             'icon' => 'fa-chart-bar',
             'submenu' => [
-                ['label' => 'Sales Report', 'icon' => 'fa-file-alt', 'route' => '#'],
-                ['label' => 'Purchase Report', 'icon' => 'fa-file-alt', 'route' => '#'],
-                ['label' => 'Inventory Report', 'icon' => 'fa-file-alt', 'route' => '#'],
-                ['label' => 'Attendance Report', 'icon' => 'fa-file-alt', 'route' => '#'],
-                ['label' => 'Profit Report', 'icon' => 'fa-file-alt', 'route' => '#'],
-            ]
+                ['label' => 'Sales Report', 'icon' => 'fa-file-alt', 'route' => 'reports.sales'],
+                ['label' => 'Purchase Report', 'icon' => 'fa-file-alt', 'route' => 'reports.purchase'],
+                ['label' => 'Inventory Report', 'icon' => 'fa-file-alt', 'route' => 'reports.inventory'],
+                ['label' => 'Attendance Report', 'icon' => 'fa-file-alt', 'route' => 'reports.attendance'],
+                ['label' => 'Profit Report', 'icon' => 'fa-file-alt', 'route' => 'reports.profit'],
+            ],
+            'active' => str_starts_with($currentRoute, 'reports.')
         ],
         [
             'label' => 'Analytics',
             'icon' => 'fa-chart-pie',
-            'route' => '#',
+            'route' => 'analytics.index',
+            'active' => $currentRoute == 'analytics.index'
         ],
         [
             'label' => 'Notifications',
             'icon' => 'fa-bell',
             'badge' => '5',
-            'route' => '#',
+            'route' => 'notifications.index',
+            'active' => $currentRoute == 'notifications.index'
         ],
         [
             'label' => 'System Settings',
             'icon' => 'fa-cog',
-            'route' => '#',
+            'route' => 'system.settings',
+            'active' => $currentRoute == 'system.settings'
         ],
     ];
 @endphp
@@ -258,19 +272,45 @@
                         @foreach($item['submenu'] as $sub)
                             @php
                                 $isSubActive = isset($sub['route']) && $sub['route'] !== '#' && $currentRoute === $sub['route'];
+                                $routeExists = isset($sub['route']) && $sub['route'] !== '#' && Route::has($sub['route']);
+                                
+                                // Build route URL with parameters if needed
+                                $routeUrl = '#';
+                                if ($routeExists) {
+                                    try {
+                                        if (isset($sub['params']) && is_array($sub['params'])) {
+                                            $routeUrl = route($sub['route'], $sub['params']);
+                                        } else {
+                                            $routeUrl = route($sub['route']);
+                                        }
+                                    } catch (\Exception $e) {
+                                        $routeUrl = '#';
+                                    }
+                                }
                             @endphp
-                            <a href="{{ isset($sub['route']) && $sub['route'] !== '#' ? route($sub['route']) : '#' }}" 
+                            <a href="{{ $routeUrl }}" 
                                class="nav-link sub-link {{ $isSubActive ? 'active' : '' }}"
-                               onclick="{{ $sub['route'] === '#' ? 'event.preventDefault();' : '' }}">
+                               onclick="{{ $routeUrl === '#' ? 'event.preventDefault();' : '' }}">
                                 <span class="nav-icon"><i class="fas {{ $sub['icon'] }}"></i></span>
                                 <span class="nav-label">{{ $sub['label'] }}</span>
                             </a>
                         @endforeach
                     </div>
                 @else
-                    <a href="{{ isset($item['route']) && $item['route'] !== '#' ? route($item['route']) : '#' }}" 
+                    @php
+                        $routeExists = isset($item['route']) && $item['route'] !== '#' && Route::has($item['route']);
+                        $routeUrl = '#';
+                        if ($routeExists) {
+                            try {
+                                $routeUrl = route($item['route']);
+                            } catch (\Exception $e) {
+                                $routeUrl = '#';
+                            }
+                        }
+                    @endphp
+                    <a href="{{ $routeUrl }}" 
                        class="nav-link {{ $isActive ? 'active' : '' }}"
-                       onclick="{{ isset($item['route']) && $item['route'] === '#' ? 'event.preventDefault();' : '' }}">
+                       onclick="{{ $routeUrl === '#' ? 'event.preventDefault();' : '' }}">
                         <span class="nav-icon"><i class="fas {{ $item['icon'] }}"></i></span>
                         <span class="nav-label">{{ $item['label'] }}</span>
                         @if(isset($item['badge']))
@@ -434,6 +474,7 @@
     height: 10px;
 }
 
+/* Brand */
 .sidebar-brand {
     padding: 20px 24px 16px;
     display: flex;
@@ -483,6 +524,7 @@
     font-weight: 500;
 }
 
+/* Search */
 .sidebar-search {
     padding: 14px 20px 12px;
     flex-shrink: 0;
@@ -510,10 +552,12 @@
     padding: 9px 14px 9px 40px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border-color);
+    border-radius: 6px;
     color: var(--text-white);
     font-size: 13px;
     transition: var(--transition);
     font-family: inherit;
+    outline: none;
 }
 
 .search-wrapper input::placeholder {
@@ -522,13 +566,13 @@
 }
 
 .search-wrapper input:focus {
-    outline: none;
     background: rgba(255, 255, 255, 0.05);
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.06);
 }
 
-.search-wrapper input:focus + i {
+.search-wrapper input:focus + i,
+.search-wrapper input:focus ~ i {
     color: var(--primary-light);
 }
 
@@ -541,12 +585,15 @@
     cursor: pointer;
     padding: 4px 8px;
     transition: var(--transition);
+    border-radius: 4px;
 }
 
 .search-clear:hover {
     color: var(--text-white);
+    background: rgba(255, 255, 255, 0.05);
 }
 
+/* Navigation */
 .sidebar-nav {
     flex: 1;
     overflow-y: auto;
@@ -565,6 +612,7 @@
 
 .sidebar-nav::-webkit-scrollbar-thumb {
     background: var(--primary);
+    border-radius: 10px;
 }
 
 .nav-item {
@@ -572,7 +620,7 @@
 }
 
 .nav-item.hidden {
-    display: none;
+    display: none !important;
 }
 
 .nav-link {
@@ -589,6 +637,7 @@
     font-weight: 500;
     min-height: 42px;
     border-left: 3px solid transparent;
+    border-radius: 6px;
 }
 
 .nav-link:hover {
@@ -643,6 +692,7 @@
     text-transform: uppercase;
     letter-spacing: 0.8px;
     flex-shrink: 0;
+    border-radius: 20px;
     transition: var(--transition);
 }
 
@@ -674,6 +724,7 @@
     color: var(--primary-light);
 }
 
+/* Submenu */
 .sub-menu {
     max-height: 0;
     overflow: hidden;
@@ -718,6 +769,11 @@
     border-left-color: #ef4444;
 }
 
+.logout-link:hover .nav-icon {
+    color: #ef4444;
+}
+
+/* Footer */
 .sidebar-footer {
     padding: 12px 24px;
     border-top: 1px solid var(--border-color);
@@ -755,6 +811,7 @@
 .dot {
     width: 7px;
     height: 7px;
+    border-radius: 50%;
     display: inline-block;
 }
 
@@ -772,6 +829,7 @@
     }
 }
 
+/* Responsive */
 @media (max-width: 992px) {
     .sidebar {
         transform: translateX(-100%);
@@ -881,6 +939,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Sidebar JS loaded');
+    
     
 });
 </script>

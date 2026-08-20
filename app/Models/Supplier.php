@@ -34,4 +34,24 @@ class Supplier extends Model
     {
         return $this->hasMany(PurchaseInvoice::class);
     }
+
+    public function getTotalPurchasesAttribute()
+    {
+        return $this->purchaseOrders()->sum('total_amount');
+    }
+
+    public function getTotalPaidAttribute()
+    {
+        return $this->purchaseInvoices()->sum('paid_amount');
+    }
+
+    public function getTotalDueAttribute()
+    {
+        return $this->purchaseInvoices()->sum('due_amount');
+    }
+
+    public function getPurchaseCountAttribute()
+    {
+        return $this->purchaseOrders()->count();
+    }
 }
