@@ -1,14 +1,18 @@
 <?php
 
+use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\TwoFactorController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\RackController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StockMovementController;
+use App\Http\Controllers\StockTransferController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -267,6 +271,59 @@ Route::prefix('supplier')->name('supplier.')->group(function () {
     Route::post('/{supplier}/payment', [App\Http\Controllers\SupplierController::class, 'makePayment'])->name('payment');
 });
 
+
+// ============================================
+// WAREHOUSE MODULE ROUTES
+// ============================================
+
+
+Route::prefix('warehouse')->name('warehouse.')->middleware(['auth'])->group(function () {
+    
+    // =====================
+    // 1. Warehouses
+    // =====================
+    Route::get('/', [WarehouseController::class, 'index'])->name('index');
+    Route::get('/create', [WarehouseController::class, 'create'])->name('create');
+    Route::post('/store', [WarehouseController::class, 'store'])->name('store');
+    Route::get('/{warehouse}/edit', [WarehouseController::class, 'edit'])->name('edit');
+    Route::put('/{warehouse}', [WarehouseController::class, 'update'])->name('update');
+    Route::delete('/{warehouse}', [WarehouseController::class, 'destroy'])->name('destroy');
+    Route::get('/{warehouse}/toggle-status', [WarehouseController::class, 'toggleStatus'])->name('toggle-status');
+
+    // =====================
+    // 2. Racks & Shelves
+    // =====================
+    Route::prefix('racks')->name('racks.')->group(function () {
+        Route::get('/', [RackController::class, 'index'])->name('index');
+        Route::get('/create', [RackController::class, 'create'])->name('create');
+        Route::post('/store', [RackController::class, 'store'])->name('store');
+        Route::get('/{rack}/edit', [RackController::class, 'edit'])->name('edit');
+        Route::put('/{rack}', [RackController::class, 'update'])->name('update');
+        Route::delete('/{rack}', [RackController::class, 'destroy'])->name('destroy');
+        Route::get('/{rack}/toggle-status', [RackController::class, 'toggleStatus'])->name('toggle-status');
+    });
+
+    // =====================
+    // 3. Stock Transfers
+    // =====================
+    Route::prefix('transfers')->name('transfers.')->group(function () {
+        Route::get('/', [StockTransferController::class, 'index'])->name('index');
+        Route::get('/create', [StockTransferController::class, 'create'])->name('create');
+        Route::post('/store', [StockTransferController::class, 'store'])->name('store');
+        Route::get('/{transfer}', [StockTransferController::class, 'show'])->name('show');
+        Route::post('/{transfer}/update-status', [StockTransferController::class, 'updateStatus'])->name('update-status');
+    });
+
+    // =====================
+    // 4. Receive Stock & Issue Stock
+    // =====================
+    Route::get('/receive', [StockMovementController::class, 'receiveIndex'])->name('receive');
+    Route::post('/receive/store', [StockMovementController::class, 'receiveStore'])->name('receive.store');
+
+    Route::get('/issue', [StockMovementController::class, 'issueIndex'])->name('issue');
+    Route::post('/issue/store', [StockMovementController::class, 'issueStore'])->name('issue.store');
+
+});
 /*
     // Inventory Module
     Route::prefix('inventory')->name('inventory.')->group(function () {

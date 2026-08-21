@@ -87,8 +87,8 @@
             'icon' => 'fa-warehouse',
             'submenu' => [
                 ['label' => 'Warehouses', 'icon' => 'fa-store', 'route' => 'warehouse.index'],
-                ['label' => 'Racks & Shelves', 'icon' => 'fa-layer-group', 'route' => 'warehouse.racks'],
-                ['label' => 'Stock Transfer', 'icon' => 'fa-exchange-alt', 'route' => 'warehouse.transfer'],
+                ['label' => 'Racks & Shelves', 'icon' => 'fa-layer-group', 'route' => 'warehouse.racks.index'], 
+                ['label' => 'Stock Transfer', 'icon' => 'fa-exchange-alt', 'route' => 'warehouse.transfers.index'], 
                 ['label' => 'Receive Stock', 'icon' => 'fa-arrow-down', 'route' => 'warehouse.receive'],
                 ['label' => 'Issue Stock', 'icon' => 'fa-arrow-up', 'route' => 'warehouse.issue'],
             ],
